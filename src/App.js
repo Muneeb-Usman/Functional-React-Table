@@ -88,6 +88,7 @@ function App() {
                         </option>
                     ))}
                 </select>
+                <button onClick={handleResetFilters}>Reset Filters</button>
             </div>
 
             {/* Display the Table */}
