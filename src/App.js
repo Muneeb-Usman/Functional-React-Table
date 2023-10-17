@@ -19,6 +19,8 @@ function App() {
     const [filters, setFilters] = useState({
         name: '',
         age: '',
+        city: '',
+        occupation: '',
     });
 
     const handleFilterChange = (e) => {
@@ -30,15 +32,23 @@ function App() {
         setFilters({
             name: '',
             age: '',
+            city: '',
+            occupation: '',
         });
         setData(sampleData);
-    }
+    };
+
+    // Extract unique city and occupation values from the data
+    const cities = [...new Set(sampleData.map((item) => item.city))];
+    const occupations = [...new Set(sampleData.map((item) => item.occupation))];
 
     // Filter the data based on user input
     const filteredData = data.filter((item) => {
         return (
             item.name.toLowerCase().includes(filters.name.toLowerCase()) &&
-            (filters.age === '' || item.age.toString() === filters.age)
+            (filters.age === '' || item.age.toString() === filters.age) &&
+            (filters.city === '' || item.city === filters.city) &&
+            (filters.occupation === '' || item.occupation === filters.occupation)
         );
     });
 
@@ -62,6 +72,22 @@ function App() {
                     value={filters.age}
                     onChange={handleFilterChange}
                 />
+                <select name="city" value={filters.city} onChange={handleFilterChange}>
+                    <option value="">All Cities</option>
+                    {cities.map((city, index) => (
+                        <option key={index} value={city}>
+                            {city}
+                        </option>
+                    ))}
+                </select>
+                <select name="occupation" value={filters.occupation} onChange={handleFilterChange}>
+                    <option value="">All Occupations</option>
+                    {occupations.map((occupation, index) => (
+                        <option key={index} value={occupation}>
+                            {occupation}
+                        </option>
+                    ))}
+                </select>
             </div>
 
             {/* Display the Table */}
